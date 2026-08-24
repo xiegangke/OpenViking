@@ -11,9 +11,13 @@ const STOPWORDS = new Set([
   "what", "when", "where", "which", "who", "whom", "whose", "why", "how", "did", "does",
   "is", "are", "was", "were", "the", "and", "for", "with", "from", "that", "this", "your", "you",
 ]);
-const USER_RESERVED_DIRS = new Set(["memories", "skills"]);
+const USER_RESERVED_DIRS = new Set(["memories", "skills", "peers"]);
 const SOURCES = [
   { type: "memory", uri: "viking://~/memories", bucket: "memories" },
+  // Auto-captured turn memories land under peers/<workspace-peer>/memories, so
+  // the space-level memories dir alone never sees them. Searching the whole
+  // peers subtree keeps recall working across workspaces.
+  { type: "memory", uri: "viking://user/peers", bucket: "memories" },
   { type: "skill", uri: "viking://~/skills", bucket: "skills" },
 ];
 const DEFAULT_CONTEXT_LIMIT = 10;
